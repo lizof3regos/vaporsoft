@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+      <title></title>
+
+      <!-- css -->
+      <link rel="stylesheet" href="/reset.css">
+      <link rel="stylesheet" href="/feather.css">
+
+      <!-- fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400|Montserrat:400,700" rel="stylesheet">
+
+      <!-- js -->
+      <script src='/js/images.js'></script>
+      <script src='/js/main.js'></script>
+
+      <script async src='https://www.googletagmanager.com/gtag/js?id=UA-62288351-2'></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-62288351-2');</script>
+
+      
+
+      
+      
+    </head>
+
+    <body>
+
+    <a href="/">
+      <div class='header-image' style='background-image: url(&#x2F;theme_images&#x2F;default.gif);'></div>
+    </a>
+
+    
+<div class='container'>
+  <section class="post">
+  	<div class="title-and-info">
+    	<h2>Setting up RVM with Cygwin</h2>
+    	<div class="info">
+    		<span>2 minute read</span>
+    		<span class='divider'/>
+    			<span>03 August 2016</span>
+    		<span class='divider'/>
+          <!-- link to page category if user is building categories -->
+          <span><a href="/categories/tutorial">tutorial</a></span>
+    		
+    	</div>
+    </div>
+  	<article>
+  		<h3 id="why">Why?</h3>
+<p>If you're on Windows, many of my Ruby tutorials might not work as expected.  Cygwin is a terminal emulator for Windows that gives it the abilities of Linux / Unix.</p>
+<p>RVM, or the Ruby Version Manager, is a really nice way of setting up Ruby on any system.  With a few lines, you can install multiple versions of Ruby.</p>
+<h3 id="what-you-ll-need">What you'll need</h3>
+<p>I'll assume that you have a working install of Cygwin.  If you don't, it's as simple as any other Windows setup.  You can download <a href="https://cygwin.com/install.html">Cygwin here</a>.</p>
+<h3 id="installing-rvm-and-ruby">Installing RVM and Ruby</h3>
+<p>Getting RVM up and running is pretty simple once you have Cygwin set up.  Simply open a new console and type</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#bf616a;">gpg</span><span style="background-color:#2b303b;color:#bf616a;"> --</span><span style="background-color:#2b303b;color:#bf616a;">keyserver</span><span style="background-color:#2b303b;color:#c0c5ce;"> hkp://keys.gnupg.net</span><span style="background-color:#2b303b;color:#bf616a;"> --</span><span style="background-color:#2b303b;color:#bf616a;">recv-keys</span><span style="background-color:#2b303b;color:#c0c5ce;"> 409B6B1796C275462A1703113804BB82D39DC0E3</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span></pre>
+<p>And then</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#96b5b4;">\c</span><span style="background-color:#2b303b;color:#bf616a;">url</span><span style="background-color:#2b303b;color:#bf616a;"> -</span><span style="background-color:#2b303b;color:#bf616a;">sSL</span><span style="background-color:#2b303b;color:#c0c5ce;"> https://get.rvm.io</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#c0c5ce;">|</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#bf616a;">bash</span><span style="background-color:#2b303b;color:#bf616a;"> -</span><span style="background-color:#2b303b;color:#bf616a;">s</span><span style="background-color:#2b303b;color:#c0c5ce;"> stable</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span></pre>
+<p>If all goes to plan, you'll get a success message.  Close your current Cygwin terminal and open a new one to reload settings.  Then, type the following to install Ruby.</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#bf616a;">rvm</span><span style="background-color:#2b303b;color:#c0c5ce;"> install ruby</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span></pre>
+<p>This might take a while.  Once it finishes, we'll type in <code>ruby -v</code> to make sure Ruby installed properly.</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#bf616a;">ruby</span><span style="background-color:#2b303b;color:#bf616a;"> -</span><span style="background-color:#2b303b;color:#bf616a;">v</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">&gt;&gt;</span><span style="background-color:#2b303b;color:#c0c5ce;"> ruby 2.3.0p0 (2015-12-25 revision 53290</span><span style="background-color:#2b303b;color:#c0c5ce;">) [x86_64-cygwin]
+</span></pre>
+<p>We'll also probably want the <code>bundle</code> gem so we can bulk-install Ruby packages.</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#bf616a;">gem</span><span style="background-color:#2b303b;color:#c0c5ce;"> install bundle</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span></pre>
+<p>And that's it!</p>
+<h3 id="help">Help!  I'm getting errors!</h3>
+<h5 id="it-fails-when-i-do">It fails when I do <code>rvm install ruby</code></h5>
+<p>Try to run this command first:</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#bf616a;">rvm</span><span style="background-color:#2b303b;color:#c0c5ce;"> requirements</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span></pre>
+<p>This will try to install all the stuff RVM relies upon for installing Ruby.  If this fails, you'll probably see an error similar to <code>setup-x86_64.exe not found</code>.  This means you'll have to add the Cygwin installer to your <code>PATH</code> (A system variable that tells Windows where all the good executable stuff is).</p>
+<p>We can edit this by searching &quot;Environment Variables&quot; in the Start Menu.</p>
+<p><img src="/images/setting-up-rvm-with-cygwin/Untitled.png" alt="" /></p>
+<p>Go ahead and click that option.  It'll bring up a dialog.  We want to click the &quot;Environment Variables&quot; option on the bottom right.</p>
+<p><img src="/images/setting-up-rvm-with-cygwin/Capture-1.PNG" alt="" /></p>
+<p>In the section titled &quot;User variables for <em>username here</em>&quot;, scroll and look for a <code>Variable</code> named <code>Path</code>.  Double click it.</p>
+<p><img src="/images/setting-up-rvm-with-cygwin/Untitled-1.png" alt="" /></p>
+<p>Add a <code>New</code> variable by clicking the button on the top right.  The value of this will be whatever folder contains your <code>setup-x86_64.exe</code> file.  In my case, this was <code>E:\Program Files\Cygwin</code>, but by default, Cygwin installs to <code>C:\Cygwin</code>.  Note that you shouldn't append the actual file to your <code>Path</code> entry.</p>
+<p>CORRECT</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#bf616a;">C:</span><span style="background-color:#2b303b;color:#96b5b4;">\C</span><span style="background-color:#2b303b;color:#bf616a;">ygwin</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span></pre>
+<p>INCORRECT</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#bf616a;">C:</span><span style="background-color:#2b303b;color:#96b5b4;">\C</span><span style="background-color:#2b303b;color:#bf616a;">ygwin</span><span style="background-color:#2b303b;color:#96b5b4;">\s</span><span style="background-color:#2b303b;color:#bf616a;">etup-x86_64.exe</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span></pre>
+<p>Press <code>Okay</code> on both open dialogs, and then open a new instance of the Cygwin terminal.  If all goes right, <code>rvm requirements</code> should now succeed.</p>
+
+  	</article>
+  </section>
+
+  <div id='disqus_thread'></div><script> var disqus_config = function () { }; (function() { var d = document, s = d.createElement('script'); s.src = 'https://vaporsoft-net.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href='https://disqus.com/?ref_noscript'>comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+    <footer>
+      Feather theme by <a href="https://github.com/piedoom/feather">doomy</a>&nbsp;&nbsp;-&nbsp;&nbsp; Built with <a href="https://github.com/Keats/gutenberg">Gutenberg</a>
+      &nbsp;&nbsp;-&nbsp;&nbsp; <a href=https:&#x2F;&#x2F;paypal.me&#x2F;piedoomy>Donate</a>
+    </footer>
+
+    </body>
+
+</html>

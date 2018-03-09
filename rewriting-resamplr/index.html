@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+      <title></title>
+
+      <!-- css -->
+      <link rel="stylesheet" href="/reset.css">
+      <link rel="stylesheet" href="/feather.css">
+
+      <!-- fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400|Montserrat:400,700" rel="stylesheet">
+
+      <!-- js -->
+      <script src='/js/images.js'></script>
+      <script src='/js/main.js'></script>
+
+      <script async src='https://www.googletagmanager.com/gtag/js?id=UA-62288351-2'></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-62288351-2');</script>
+
+      
+
+      
+      
+    </head>
+
+    <body>
+
+    <a href="/">
+      <div class='header-image' style='background-image: url(&#x2F;theme_images&#x2F;default.gif);'></div>
+    </a>
+
+    
+<div class='container'>
+  <section class="post">
+  	<div class="title-and-info">
+    	<h2>Rewriting Resamplr: Goals</h2>
+    	<div class="info">
+    		<span>1 minute read</span>
+    		<span class='divider'/>
+    			<span>09 March 2018</span>
+    		<span class='divider'/>
+          <!-- link to page category if user is building categories -->
+          <span><a href="/categories/development">development</a></span>
+    		
+    	</div>
+    </div>
+  	<article>
+  		<p>I started programming as a design student in college with Python and Ruby.  While great languages with purpose, I've recently found myself less and less happy with dynamically typed languages.</p>
+<p>Specifically, Ruby on Rails can cause headaches.  Ruby's concept of &quot;truthiness&quot; has led me to all sorts of confusing code.  I might just be a poor Ruby programmer, but I prefer rigid compiler checks over runtime errors.</p>
+<p>It's no secret that I've grown to love the <a href="/tags/rust/">Rust programming language</a> lately.  I started learning it because <a href="https://reddit.com/r/programmingcirclejerk">I wanted to be in on the joke</a>, but the more I learned, the more I liked it.  Going back to maintain my project <a href="https://resamplr.com">Resamplr</a> felt miserable after Rust.  So I decided to trash it, and redo it.</p>
+<h1 id="project-goals">Project goals</h1>
+<p>In order to avoid the same pitfalls as before, I set up goals for the new project.</p>
+<ul>
+<li>It should separate back-end logic from front-end views</li>
+<li>It should be modular and easily maintained</li>
+<li>It should focus on user security &amp; experience</li>
+<li>It should be tested thoroughly</li>
+<li>It should deploy easily (no manual <code>git clone</code> on the production server)</li>
+</ul>
+<h1 id="starting-over-fuck-javascript">Starting Over: Fuck JavaScript</h1>
+<p>Rails projects (usually) mix front-end views with back-end logic through some templating system.  This often felt weird and messy.  I began by researching alternatives.  I came across a few contenders: React, Elm, and PureScript.</p>
+<h2 id="react">React</h2>
+<p>Pros:</p>
+<ul>
+<li>Huge community</li>
+<li>Gentle learning curve</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Still JavaScript</li>
+<li>Absolutely <em>huge</em></li>
+<li>Tooling sucks</li>
+</ul>
+<h2 id="purescript">PureScript</h2>
+<p>Pros:</p>
+<ul>
+<li>No runtime errors</li>
+<li>Purely functional</li>
+<li>Healthy community</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Purely functional</li>
+<li>Reactive frameworks slow comparatively</li>
+<li>Similar to Haskell in learning curve (i.e. super hard)</li>
+</ul>
+<h2 id="elm">Elm</h2>
+<p>Pros:</p>
+<ul>
+<li>No runtime errors</li>
+<li>Great introduction to functional programming</li>
+<li>One of the fastest reactive frameworks</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Can be verbose and full of boilerplate</li>
+<li>Smaller community</li>
+<li>Rigid architecture</li>
+</ul>
+<p>In the end, I chose Elm because of its speed.  Although PureScript looks great (and I intend to learn more about it someday) it proved too difficult for my little imperative mind to understand.  Halogen, PureScript's go-to reactive framework, is also much slower than Elm, and even slower than React.</p>
+<h2 id="end">End</h2>
+<p>I will continue to document my findings with Rust and Elm in the coming months.  In the meantime, you can find the WIP source code <a href="https://github.com/resamplr/resamplr-web">on Github</a>.</p>
+
+  	</article>
+  </section>
+
+  <div id='disqus_thread'></div><script> var disqus_config = function () { }; (function() { var d = document, s = d.createElement('script'); s.src = 'https://vaporsoft-net.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href='https://disqus.com/?ref_noscript'>comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+    <footer>
+      Feather theme by <a href="https://github.com/piedoom/feather">doomy</a>&nbsp;&nbsp;-&nbsp;&nbsp; Built with <a href="https://github.com/Keats/gutenberg">Gutenberg</a>
+      &nbsp;&nbsp;-&nbsp;&nbsp; <a href=https:&#x2F;&#x2F;paypal.me&#x2F;piedoomy>Donate</a>
+    </footer>
+
+    </body>
+
+</html>

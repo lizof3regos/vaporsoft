@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+      <title></title>
+
+      <!-- css -->
+      <link rel="stylesheet" href="/reset.css">
+      <link rel="stylesheet" href="/feather.css">
+
+      <!-- fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400|Montserrat:400,700" rel="stylesheet">
+
+      <!-- js -->
+      <script src='/js/images.js'></script>
+      <script src='/js/main.js'></script>
+
+      <script async src='https://www.googletagmanager.com/gtag/js?id=UA-62288351-2'></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-62288351-2');</script>
+
+      
+
+      
+      
+    </head>
+
+    <body>
+
+    <a href="/">
+      <div class='header-image' style='background-image: url(&#x2F;theme_images&#x2F;default.gif);'></div>
+    </a>
+
+    
+<div class='container'>
+  <section class="post">
+  	<div class="title-and-info">
+    	<h2>Kontakt: A Case Study</h2>
+    	<div class="info">
+    		<span>2 minute read</span>
+    		<span class='divider'/>
+    			<span>04 October 2017</span>
+    		<span class='divider'/>
+          <!-- link to page category if user is building categories -->
+          <span><a href="/categories/design">design</a></span>
+    		
+    	</div>
+    </div>
+  	<article>
+  		<p>This is an analysis of <em>Native Instruments'</em> Kontakt 5 software sampler audio plugin.  This is more of an idea scratchpad instead of a fully-thought-out post.</p>
+<h1 id="user-facing">User facing</h1>
+<p><img src="/images/kontakt-a-case-study/1.png" alt="" /></p>
+<p>UI has since been updated but Native Access is a heap of garbage that can't stop crashing, so I can't update!</p>
+<ul>
+<li>Easy to navigate file browser that for once is welcome over Window's default</li>
+<li>Layout is simple (for the most part)</li>
+<li>Kind of boring grey tones.  We don't want something exciting, but the half-grey with poorly rendered text gives a strong 2000s vibe.</li>
+</ul>
+<p><img src="/images/kontakt-a-case-study/2.png" alt="" /></p>
+<ul>
+<li>Reference tone is useful when tuning samples</li>
+<li>Features are haphazardly laid out and difficult to scan.  More sectioning could be done to make this better.  I also don't like this taking up vertical space.</li>
+</ul>
+<p><img src="/images/kontakt-a-case-study/3.png" alt="" /></p>
+<ul>
+<li>
+<p>Multi-rack saves memory at the expense of ease of use (at least in a DAW).  I'd rather have multiple instances of a plugin running than one master - it feels very MIDI hackish (because it is!).</p>
+</li>
+<li>
+<p>Default controls look straight out of 2001</p>
+</li>
+<li>
+<p>Text rendering is awful</p>
+</li>
+<li>
+<p>Rack idea is just overall a bit convoluted and unnecessary</p>
+</li>
+</ul>
+<p><img src="/images/kontakt-a-case-study/4.png" alt="" /></p>
+<ul>
+<li>Nice preview information for a given instrument</li>
+<li>More text rendering problems</li>
+</ul>
+<p><img src="/images/kontakt-a-case-study/5.png" alt="" /></p>
+<ul>
+<li>Items take up too much vertical space and quickly become annoying</li>
+<li>Would make more sense to have a two-pane system instead of having outdated accordian-style tabs</li>
+<li>Very difficult to use when in possession of many libraries</li>
+</ul>
+<h1 id="technical-overview">Technical Overview</h1>
+<ul>
+<li>Heavily DRM dependent to a huge fault</li>
+<li>Libraries often disappear and are difficult to retrieve without reinstalling the whole product</li>
+<li>Native Access is a garbage heap that never works.  The plugin should be self contained.  While a manager to download updates can be nice, it shouldn't interfere with the core experience.</li>
+<li>User-made libraries have no copy protection unless a contract is formed with NI.  This is actually a good incentive for commercial industries to purchase a license, but as of now that license is cost prohibitive for most individuals.  NI is missing out on a market of self-made producers.</li>
+<li>The KSP language is an absolute nightmare to work with and makes me suicidal.  It's like a combination of COBOL and PHP.</li>
+<li>The editor is too split between GUI and programmatic elements, and they often butt heads.  Most work should be done in scripting with the exception of zone editing and (possibly) user-facing GUI editing.</li>
+</ul>
+<h1 id="bare-elements">Bare Elements</h1>
+<ul>
+<li>File browser &amp; Library</li>
+<li>GUI Editor</li>
+<li>Zone/Mapping editor</li>
+<li>Sample/Looping editor</li>
+<li>Group editor (useful for stuff like round robins/velocity/etc).</li>
+<li>Script editor</li>
+</ul>
+<h1 id="useful-additions">Useful additions</h1>
+<ul>
+<li>downloads within program</li>
+<li>easier publishing and packing</li>
+</ul>
+
+  	</article>
+  </section>
+
+  <div id='disqus_thread'></div><script> var disqus_config = function () { }; (function() { var d = document, s = d.createElement('script'); s.src = 'https://vaporsoft-net.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href='https://disqus.com/?ref_noscript'>comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+    <footer>
+      Feather theme by <a href="https://github.com/piedoom/feather">doomy</a>&nbsp;&nbsp;-&nbsp;&nbsp; Built with <a href="https://github.com/Keats/gutenberg">Gutenberg</a>
+      &nbsp;&nbsp;-&nbsp;&nbsp; <a href=https:&#x2F;&#x2F;paypal.me&#x2F;piedoomy>Donate</a>
+    </footer>
+
+    </body>
+
+</html>

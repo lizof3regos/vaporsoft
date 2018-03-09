@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+      <title></title>
+
+      <!-- css -->
+      <link rel="stylesheet" href="/reset.css">
+      <link rel="stylesheet" href="/feather.css">
+
+      <!-- fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400|Montserrat:400,700" rel="stylesheet">
+
+      <!-- js -->
+      <script src='/js/images.js'></script>
+      <script src='/js/main.js'></script>
+
+      <script async src='https://www.googletagmanager.com/gtag/js?id=UA-62288351-2'></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-62288351-2');</script>
+
+      
+
+      
+      
+    </head>
+
+    <body>
+
+    <a href="/">
+      <div class='header-image' style='background-image: url(&#x2F;theme_images&#x2F;default.gif);'></div>
+    </a>
+
+    
+<div class='container'>
+  <section class="post">
+  	<div class="title-and-info">
+    	<h2>Automatically publishing your Gutenberg project to Github pages</h2>
+    	<div class="info">
+    		<span>5 minute read</span>
+    		<span class='divider'/>
+    			<span>16 December 2017</span>
+    		<span class='divider'/>
+          <!-- link to page category if user is building categories -->
+          <span><a href="/categories/tutorial">tutorial</a></span>
+    		
+    	</div>
+    </div>
+  	<article>
+  		<h1 id="gutenberg">Gutenberg & Static Site generators</h1>
+<p>If you're familiar with Github, you're most likely also aware of the Github Pages tool that allows users to publish static sites.  This is particularly useful for docs or a blog.  By default, Github uses Jekyll (A ruby based static site generator), but you can use whatever you want provided you have an <code>index.html</code> file in the root of a branch called <code>gh-pages</code>.</p>
+<p>I recently came across a project called <a href="https://www.getgutenberg.io/">Gutenberg</a> by <a href="https://github.com/Keats/gutenberg">Keats</a> and other contributors.  I was initially interested in the project because I like the Rust programming language, but Gutenberg has the additional value of having everything-you-need in a single executable.</p>
+<p>This means that you don't need to fiddle with RVM or Python on your local machine to get started - you just need a <a href="https://www.getgutenberg.io/documentation/getting-started/installation/">single executable</a>.  Being said, Gutenberg is opinionated, so don't expect a billion preprocessors bundled.  You get Tera - a fine templating markup - as well as an SCSS preprocessor.  If for some reason you love to torture yourself with CoffeeScript or Babel, you'll have to do that stuff on your own.</p>
+<h1 id="disclaimer">Disclaimer</h1>
+<p>This post is not about how to use Gutenberg.  For that stuff, please check out Gutenberg's official docs.  They're super easy to read through and quick to execute.  <a href="https://www.getgutenberg.io/">See it here.</a></p>
+<h1 id="automating">Automating</h1>
+<p>Unlike Jekyll, Gutenberg is not run by Github.  In other words, if you push Gutenberg project files, they won't automatically build inside of Github and publish to the <code>gh-pages</code> branch.  However, we can use Travis CI to do this for us.</p>
+<p>I'm not going to explain exactly how to set up Travis as there are great documents already on that subject.  All you need to do is set up a new Github repository and enable it within the Travis dashboard.</p>
+<h2 id="adding-to-your">Adding to your <code>.gitignore</code></h2>
+<p>You don't want your project pushing the generated site to master accidentally if you do something like <code>gutenberg build</code> on master.  I recommend adding the following files to your <code>.gitignore</code>.  Keep in mind that this assumes that your project files are in the root directory.  For a static site generator <em>within</em> a code project, the structure may be different.</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#c0c5ce;">public
+</span></pre>
+<p>And that's it.  Gutenberg outputs everything to the <code>public</code> directory (unless of course you use the new <a href="https://github.com/Keats/gutenberg/pull/191"><code>--ouput-dir parameter</code></a>)</p>
+<h2 id="setting-up-travis">Setting up Travis</h2>
+<p>Before pushing anything, Travis needs a Github private access key in order to make changes to your repository.  If you're already logged in to your account, just click <a href="https://github.com/settings/tokens">here</a> to go to your tokens page.  Otherwise, navigate to <code>Settings &gt; Developer Settings &gt; Personal Access Tokens</code>.  Generate a new token, and give it any description you'd like.  Under the &quot;Select Scopes&quot; section, give it <code>repo</code> permissions.  Click &quot;Generate token&quot; to finish up.</p>
+<p>Your token will now be visible!  Copy it into your clipboard and head back to Travis.  Once on Travis, click on your project, and navigate to &quot;Settings&quot;.  Scroll down to &quot;Environment Variables&quot; and input a name of <code>GH_TOKEN</code> with a value of your access token.  Make sure &quot;Display value in build log&quot; is off, and then click add.  Now Travis has access to your repository.</p>
+<h3 id="encrypted-keys">Encrypted Keys</h3>
+<p>Alternatively, you can put encrypted keys right into your <code>.travis.yml</code> file by using <a href="https://docs.travis-ci.com/user/environment-variables/#Defining-encrypted-variables-in-.travis.yml">this</a> method.  Although this can be seen as more legible for other users, it requires Ruby and a special Travis gem.  I didn't have Ruby on my system, and I didn't feel like installing RVM, so I opted for just using the website.  Either is fine, and either will work!  If you do already have Ruby installed, I recommend the encrypted keys method.</p>
+<h2 id="setting-up-your-settings">Setting up your settings</h2>
+<p>We're almost done.  We just need some scripts in a <code>.travis.yml</code> file to tell Travis what to do.</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#bf616a;">before_script</span><span style="background-color:#2b303b;color:#c0c5ce;">:</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#c0c5ce;">-</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#a3be8c;">curl -s -L https://github.com/Keats/gutenberg/releases/download/v0.2.2/gutenberg-v0.2.2-x86_64-unknown-linux-gnu.tar.gz | sudo tar xvzf - -C /usr/local/bin</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#bf616a;">script</span><span style="background-color:#2b303b;color:#c0c5ce;">:</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#c0c5ce;">-</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#a3be8c;">gutenberg build</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#bf616a;">after_success</span><span style="background-color:#2b303b;color:#c0c5ce;">:</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#b48ead;">|</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#a3be8c;">  </span><span style="background-color:#2b303b;color:#c0c5ce;">[</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#a3be8c;">$TRAVIS_BRANCH = master</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#c0c5ce;">]</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#b48ead;">&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;">&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#c0c5ce;">[</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#a3be8c;">$TRAVIS_PULL_REQUEST = false</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#c0c5ce;">]</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#b48ead;">&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;">&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#a3be8c;">gutenberg build &amp;&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#a3be8c;">sudo pip install ghp-import &amp;&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#a3be8c;">ghp-import -n public &amp;&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;"> 
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#a3be8c;">git push -fq https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span></pre>
+<p>Lets take a look at that file again, but with comments.</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#bf616a;">before_script</span><span style="background-color:#2b303b;color:#c0c5ce;">:</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#65737e;">#</span><span style="background-color:#2b303b;color:#65737e;"> download gutenberg&#39;s executable, unzip it, and add it to our binaries.  
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#65737e;">#</span><span style="background-color:#2b303b;color:#65737e;"> This link isn&#39;t future proof!  By the time you read this article, a new
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#65737e;">#</span><span style="background-color:#2b303b;color:#65737e;"> version may have been released.  Check the Gutenberg release page
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#65737e;">#</span><span style="background-color:#2b303b;color:#65737e;"> on Github for more. 
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#c0c5ce;">-</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#a3be8c;">curl -s -L https://github.com/Keats/gutenberg/releases/download/v0.2.2/gutenberg-v0.2.2-x86_64-unknown-linux-gnu.tar.gz | sudo tar xvzf - -C /usr/local/bin</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#bf616a;">script</span><span style="background-color:#2b303b;color:#c0c5ce;">:</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#c0c5ce;">-</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#a3be8c;">gutenberg build</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#bf616a;">after_success</span><span style="background-color:#2b303b;color:#c0c5ce;">:</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#b48ead;">|</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#a3be8c;">  </span><span style="background-color:#2b303b;color:#c0c5ce;">[</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#a3be8c;">$TRAVIS_BRANCH = master</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#c0c5ce;">]</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#b48ead;">&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;">&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#c0c5ce;">[</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#a3be8c;">$TRAVIS_PULL_REQUEST = false</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#c0c5ce;">]</span><span style="background-color:#2b303b;color:#c0c5ce;"> </span><span style="background-color:#2b303b;color:#b48ead;">&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;">&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#65737e;">#</span><span style="background-color:#2b303b;color:#65737e;"> This command builds our static site and automatically puts it in a directory 
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#65737e;">#</span><span style="background-color:#2b303b;color:#65737e;"> called `public`, unless specified otherwise
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#a3be8c;">gutenberg build &amp;&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#65737e;">#</span><span style="background-color:#2b303b;color:#65737e;"> install ghp-import - more on that below
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#a3be8c;">sudo pip install ghp-import &amp;&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#a3be8c;">ghp-import -n public &amp;&amp;</span><span style="background-color:#2b303b;color:#c0c5ce;"> 
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#65737e;">#</span><span style="background-color:#2b303b;color:#65737e;"> finally, push with that token that we set earlier
+</span><span style="background-color:#2b303b;color:#c0c5ce;">  </span><span style="background-color:#2b303b;color:#a3be8c;">git push -fq https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages</span><span style="background-color:#2b303b;color:#c0c5ce;">
+</span></pre>
+<p>If you already have a <code>.travis.yml</code> file for your project, just try merging the two files together manually.</p>
+<p>You can see we're using <a href="https://github.com/davisp/ghp-import">ghp-import</a> which is just an easy way to publish Github pages.</p>
+<h2 id="caveats">Caveats</h2>
+<p>Please note that <code>ghp-import</code> will <em>obliterate</em> anything in the <code>gh-pages</code> branch.  It won't just overwrite it, but completely destroy the branch and start new.  Keep this in mind if you need to preserve old versions for any reason.</p>
+<p>Also, if you're using a custom domain name like I am, you'll need to specify that.  Instead of</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#c0c5ce;">ghp-import -n public
+</span></pre>
+<p>You'll need to write your domain name with the <code>-c</code> flag.  For instance, my website looks like this:</p>
+<pre style="background-color:#2b303b">
+<span style="background-color:#2b303b;color:#c0c5ce;">ghp-import -c vaporsoft.net -n public
+</span></pre><h1 id="conclusion">Conclusion</h1>
+<p>If all goes well, the next time you make a push on <code>master</code>, your Github Pages should update and be visible.  If it's not working, wait a minute or so.  Also make sure that the settings on your Github repo allow Github Pages.</p>
+<h1 id="thanks">Thanks</h1>
+<p>Thanks to <a href="https://vincent.is/">Keats</a> for authoring Gutenberg, as well as the many <a href="https://github.com/Keats/gutenberg/graphs/contributors">contributors</a></p>
+<p>Thanks to <a href="http://t-rex.tileserver.ch/">t-rex tileserver</a> for providing an example CI file to go off of.</p>
+<p>Thanks to <a href="https://github.com/davisp">davisp</a> for authoring ghp-import, as well as the many <a href="https://github.com/davisp/ghp-import/graphs/contributors">contributors</a></p>
+<h1 id="theme">Theme</h1>
+<p>If you want a theme for Gutenberg, you can look at or use my own custom them that I use for this blog called feather.  <a href="https://github.com/piedoom/feather">It's available here</a>.  </p>
+
+  	</article>
+  </section>
+
+  <div id='disqus_thread'></div><script> var disqus_config = function () { }; (function() { var d = document, s = d.createElement('script'); s.src = 'https://vaporsoft-net.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href='https://disqus.com/?ref_noscript'>comments powered by Disqus.</a></noscript>
+
+</div>
+
+
+    <footer>
+      Feather theme by <a href="https://github.com/piedoom/feather">doomy</a>&nbsp;&nbsp;-&nbsp;&nbsp; Built with <a href="https://github.com/Keats/gutenberg">Gutenberg</a>
+      &nbsp;&nbsp;-&nbsp;&nbsp; <a href=https:&#x2F;&#x2F;paypal.me&#x2F;piedoomy>Donate</a>
+    </footer>
+
+    </body>
+
+</html>
